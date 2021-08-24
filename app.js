@@ -10,9 +10,11 @@
 let contactForm = document.querySelector('.contact-form');
 let firstName = document.getElementById('first-name');
 let lastName = document.getElementById('last-name');
-// Why is it undefined????
-// let radio = document.querySelectorAll('input[type=radio]:checked');
 let textarea = document.getElementById('message');
+// let radioBtn = document.querySelector('input[name="radio"]:checked');
+// let firstRadioBtn = document.getElementById('male').checked;
+// let secondRadioBtn = document.getElementById('female').checked;
+// console.log(firstRadioBtn.value, secondRadioBtn.value);
 let submitBtn = document.querySelector('.btn');
 let successMsg = document.querySelector('.success-message');
 
@@ -27,12 +29,21 @@ let successMsg = document.querySelector('.success-message');
 
 submitBtn.addEventListener('click', checkInputs);
 
+
 function checkInputs() {
+    let radios = document.getElementsByName('radio');
+    value = '';
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            value = radios[i].value;
+            console.log(value);
+            break;
+        }
+    }
     let firstNameInput = firstName.value;
     let lastNameInput = lastName.value;
     let text = textarea.value;
-
-    if (firstNameInput === '' && lastNameInput === '' && text === '') {
+    if (firstNameInput === '' || lastNameInput === '' || text === '' || !value) {
         firstName.className = 'invalid';
         lastName.className = 'invalid';
         textarea.className = 'invalid';
@@ -40,7 +51,9 @@ function checkInputs() {
         successMsg.style.visibility = 'visible';
         successMsg.innerText = `Please fill in all the required fields`
 
-    } else {
+    }
+
+    if (firstNameInput !== '' && lastNameInput !== '' && text !== '' && value) {
         firstName.className = 'valid';
         lastName.className = 'valid';
         textarea.className = 'valid';
@@ -48,7 +61,9 @@ function checkInputs() {
         successMsg.style.visibility = 'visible';
         successMsg.innerText = `Thank you for your message ${firstNameInput} ${lastNameInput}`
     }
-    console.log(`${firstName.value} ${lastName.value} \n Gender: \n Message: ${message.value}`)
+
+
+    console.log(`${firstName.value} ${lastName.value} \n Gender: ${value} \n Message: ${message.value}`)
 }
 
 
